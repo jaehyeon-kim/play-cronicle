@@ -1,15 +1,28 @@
-version: '3.7'
+version: '3'
+
 services:
-  "cronicle-master":
+  "cronicle-1":
     container_name: cronicle-master
     image: cronicle-base
+    hostname: cronicle-1
     restart: always
     volumes:
       - ./sample_conf/config.json:/opt/cronicle/conf/config.json
       - ./sample_conf/emails:/opt/cronicle/conf/emails
       - ./docker-entrypoint.sh:/docker-entrypoint.sh
+      - cronicle-data:/opt/cronicle/data
     entrypoint: /docker-entrypoint.sh
     environment:
       IS_MASTER: "1"
     ports:
       - 3012:3012
+  #   volumes_from:
+  #     - data_volume
+  # data_volume:
+  #   image: alpine:latest
+  #   volumes:
+  #     - /mnt/opt/cronicle/data
+  #   command: "true"
+
+volumes:
+  cronicle-data:
