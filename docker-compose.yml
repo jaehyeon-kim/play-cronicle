@@ -1,28 +1,43 @@
-version: '3'
+version: '3.2'
 
 services:
-  "cronicle-1":
-    container_name: cronicle-master
+  loadbalancer:
+    container_name: loadbalancer
+    hostname: loadbalancer
+    image: nginx    
+    volumes:
+      - ./loadbalancer/nginx.conf:/etc/nginx/nginx.conf
+    tty: true
+    links:
+      - cronicle1
+    ports:
+      - 8080:8080
+  cronicle1:
+    container_name: cronicle1
+    hostname: cronicle1
     image: cronicle-base
-    hostname: cronicle-1
     restart: always
     volumes:
       - ./sample_conf/config.json:/opt/cronicle/conf/config.json
       - ./sample_conf/emails:/opt/cronicle/conf/emails
       - ./docker-entrypoint.sh:/docker-entrypoint.sh
-      - cronicle-data:/opt/cronicle/data
+      - ./backend/cronicle/data:/opt/cronicle/data
     entrypoint: /docker-entrypoint.sh
     environment:
       IS_MASTER: "1"
-    ports:
-      - 3012:3012
-  #   volumes_from:
-  #     - data_volume
-  # data_volume:
-  #   image: alpine:latest
-  #   volumes:
-  #     - /mnt/opt/cronicle/data
-  #   command: "true"
+  cronicle2:
+    container_name: cronicle2
+    hostname: cronicle2
+    image: cronicle-base
+    restart: always
+    volumes:
+      - ./sample_conf/config.json:/opt/cronicle/conf/config.json
+      - ./sample_conf/emails:/opt/cronicle/conf/emails
+      - ./docker-entrypoint.sh:/docker-entrypoint.sh
+      - ./backend/cronicle/data:/opt/cronicle/data
+    entrypoint: /docker-entrypoint.sh
+    environment:
+      IS_MASTER: "0"
 
 volumes:
-  cronicle-data:
+  backend:

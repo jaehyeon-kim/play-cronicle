@@ -1,5 +1,5 @@
 {
-	"base_app_url": "http://localhost:3012",
+	"base_app_url": "http://loadbalancer:8080",
 	"email_from": "admin@localhost",
 	"smtp_hostname": "localhost",
 	"smtp_port": 25,
@@ -27,7 +27,7 @@
 	"track_manual_jobs": false,
 	
 	"server_comm_use_hostnames": false,
-	"web_direct_connect": false,
+	"web_direct_connect": true,
 	"web_socket_use_hostnames": false,
 	
 	"job_memory_max": 1073741824,
