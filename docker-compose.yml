@@ -16,7 +16,7 @@ services:
     container_name: cronicle1
     hostname: cronicle1
     image: cronicle-base
-    restart: always
+    #restart: always
     volumes:
       - ./sample_conf/config.json:/opt/cronicle/conf/config.json
       - ./sample_conf/emails:/opt/cronicle/conf/emails
@@ -29,7 +29,7 @@ services:
     container_name: cronicle2
     hostname: cronicle2
     image: cronicle-base
-    restart: always
+    #restart: always
     volumes:
       - ./sample_conf/config.json:/opt/cronicle/conf/config.json
       - ./sample_conf/emails:/opt/cronicle/conf/emails
